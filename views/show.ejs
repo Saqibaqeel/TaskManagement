@@ -1,0 +1,53 @@
+<% layout('layouts/boilerplate') %>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Task Details</h2>
+
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h5 class="card-title mb-0"><%= task.title %></h5>
+      </div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">
+          Due Date: <%= task.dueDate.toDateString() %>
+        </h6>
+        <p class="card-text">
+          <strong>Description:</strong> <%= task.description %>
+        </p>
+        <p class="card-text"><strong>Status:</strong> <%= task.status %></p>
+        <p class="card-text">
+          <strong>Created on:</strong> <%= task.createdAt.toDateString() %>
+        </p>
+      </div>
+
+      <div class="card-footer text-muted text-center">
+        <% if (task.status !== 'completed') { %>
+
+        <form
+          action="/tasks/<%= task._id %>/complete?_method=PATCH"
+          method="POST"
+          class="d-inline"
+        >
+          <button type="submit" class="btn btn-success btn-sm">
+            Mark as Complete
+          </button>
+        </form>
+        <% } else { %>
+
+        <button class="btn btn-success btn-sm" disabled>Completed</button>
+        <% } %>
+        <a href="/tasks/<%= task._id %>/edit" class="btn btn-warning btn-sm"
+          >Update</a
+        >
+        <form
+          action="/tasks/<%= task._id %>/delete?_method=DELETE"
+          method="POST"
+          class="d-inline"
+        >
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+        <a href="/" class="btn btn-secondary btn-sm">Back to Task List</a>
+      </div>
+    </div>
+  </div>
+</body>

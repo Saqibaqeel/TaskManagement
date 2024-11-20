@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+<body>
+  <div class="container mt-5 p-5">
+    <h2 class="text-center mb-4">Edit Task</h2>
+    <form action="/tasks/<%= task._id %>/edit?_method=PUT" method="POST" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="taskName" class="form-label">Task Name</label>
+        <input type="text" class="form-control" id="taskName" name="title" value="<%= task.title %>" placeholder="Enter the task name" required>
+      </div>
+      <div class="mb-3">
+        <label for="taskDescription" class="form-label">Description</label>
+        <textarea class="form-control" id="taskDescription" name="description" rows="3" placeholder="Enter task description" required><%= task.description %></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="taskDueDate" class="form-label">Due Date</label>
+        <input type="date" class="form-control" id="taskDueDate" name="dueDate" value="<%= task.dueDate %>" required>
+      </div>
+      <div class="mb-3">
+        <label for="taskStatus" class="form-label">Status</label>
+        <select class="form-select" id="taskStatus" name="status" required>
+          <option value="pending" <%= task.status === 'pending' ? 'selected' : '' %>>Pending</option>
+          <option value="in_progress" <%= task.status === 'in_progress' ? 'selected' : '' %>>In Progress</option>
+         
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Update Task</button>
+    </form>
+  </div>
+
+  <script>
+    (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+  </script>
+</body>
