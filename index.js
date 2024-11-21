@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const path = require('path');
 const ejsMate = require('ejs-mate');
-const wrapAsync = require('../utility/wrapAsync');
+const wrapAsync = require('./utility/wrapAsync');
 const taskValidationSchema=require('./schema')
 
 const app = express();
@@ -49,7 +49,7 @@ app.get('/tasks/new', (req, res) => {
   res.render('new-task.ejs');
 });
 
-app.post('/tasks/new',validate, wrapAsync(async (req, res) => {
+app.post('/tasks/new', wrapAsync(async (req, res) => {
   const { title, description, dueDate, status } = req.body.Task;
   const newTask = new Task({ title, description, dueDate, status: status || 'pending' });
   await newTask.save();
